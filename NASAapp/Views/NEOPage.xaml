@@ -5,8 +5,60 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:nasamodels="using:NASASDK.Models"
+      xmlns:models="using:NASAapp.Models"
+      xmlns:converters="using:NASAapp.Converters"
       mc:Ignorable="d">
 
+    <Page.Resources>
+        <converters:DateToStringConverter x:Key="DateStringConverter"/>
+        <DataTemplate x:Key="NearEarthObjectTemplate"
+                      x:DataType="nasamodels:NearEarthObject">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <TextBlock Grid.Row="0"
+                           Grid.Column="0"
+                           Text="NeoReferenceId" />
+                <TextBlock Grid.Row="0"
+                           Grid.Column="1"
+                           Text="{x:Bind NeoReferenceId, Mode=OneWay}" />
+
+                <TextBlock Grid.Row="1"
+                           Grid.Column="0"
+                           Text="Name" />
+                <TextBlock Grid.Row="1"
+                           Grid.Column="1"
+                           Text="{x:Bind Name, Mode=OneWay}" />
+
+                <TextBlock Grid.Row="2"
+                           Grid.Column="0"
+                           Text="Absolute Magnitude" />
+                <TextBlock Grid.Row="2"
+                           Grid.Column="1"
+                           Text="{x:Bind AbsoluteMagnitudeH, Mode=OneWay}" />
+
+                <HyperlinkButton Grid.Row="3"
+                                 Grid.ColumnSpan="2"
+                                 Content="Go To Nasa Jpl Site"
+                                 HorizontalAlignment="Stretch"
+                                 VerticalAlignment="Stretch"
+                                 Margin="10"
+                                 FontSize="18"
+                                 x:Name="NasaJplButton"
+                                 NavigateUri="{x:Bind NasaJplUrl, Mode=OneWay}" />
+            </Grid>
+        </DataTemplate>
+    </Page.Resources>
+    
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -22,52 +74,16 @@
         </StackPanel>
 
         <ScrollViewer Grid.Row="1">
-            <ListView x:Name="ObjectsList">
+            <ListView x:Name="MainListView">
                 <ListView.ItemTemplate>
-                    <DataTemplate x:DataType="nasamodels:NearEarthObject">
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="*" />
-                                <RowDefinition Height="*" />
-                                <RowDefinition Height="*" />
-                                <RowDefinition Height="*" />
-                            </Grid.RowDefinitions>
-
-                            <TextBlock Grid.Row="0"
-                                       Grid.Column="0"
-                                       Text="NeoReferenceId" />
-                            <TextBlock Grid.Row="0"
-                                       Grid.Column="1"
-                                       Text="{x:Bind NeoReferenceId, Mode=OneWay}" />
-
-                            <TextBlock Grid.Row="1"
-                                       Grid.Column="0"
-                                       Text="Name" />
-                            <TextBlock Grid.Row="1"
-                                       Grid.Column="1"
-                                       Text="{x:Bind Name, Mode=OneWay}" />
-
-                            <TextBlock Grid.Row="2"
-                                       Grid.Column="0"
-                                       Text="Absolute Magnitude" />
-                            <TextBlock Grid.Row="2"
-                                       Grid.Column="1"
-                                       Text="{x:Bind AbsoluteMagnitudeH, Mode=OneWay}" />
-
-                            <HyperlinkButton Grid.Row="3"
-                                             Grid.ColumnSpan="2"
-                                             Content="Go To Nasa Jpl Site"
-                                             HorizontalAlignment="Stretch"
-                                             VerticalAlignment="Stretch"
-                                             Margin="10"
-                                             FontSize="18"
-                                             x:Name="NasaJplButton"
-                                             NavigateUri="{x:Bind NasaJplUrl, Mode=OneWay}" />
-                        </Grid>
+                    <DataTemplate x:DataType="models:ObjectListItem">
+                        <StackPanel>
+                            <TextBlock Text="{x:Bind Key, Mode=OneWay, Converter={StaticResource DateStringConverter}}" />
+                            <ListView x:Name="ObjectsList"
+                                      ItemTemplate="{StaticResource NearEarthObjectTemplate}"
+                                      ItemsSource="{x:Bind ListObjects, Mode=OneWay}">
+                            </ListView>
+                        </StackPanel>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>

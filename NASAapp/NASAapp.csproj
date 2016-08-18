@@ -98,7 +98,9 @@
     <Compile Include="Controls\NearEarthObjectControl.xaml.cs">
       <DependentUpon>NearEarthObjectControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converters\DateToStringConverter.cs" />
     <Compile Include="Models\MenuItem.cs" />
+    <Compile Include="Models\ObjectListItem.cs" />
     <Compile Include="Views\APODView.xaml.cs">
       <DependentUpon>APODView.xaml</DependentUpon>
     </Compile>
