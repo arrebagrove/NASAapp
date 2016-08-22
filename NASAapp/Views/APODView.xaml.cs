@@ -36,6 +36,8 @@ namespace NASAapp.Views
 
         private async void Get_Clicked(object sender, RoutedEventArgs e)
         {
+            // see picture in database
+            // 
             try
             {
                 var picture = await pictureService.GetTodayPicture();

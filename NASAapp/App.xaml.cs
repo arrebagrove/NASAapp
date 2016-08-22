@@ -5,6 +5,8 @@ using Windows.ApplicationModel.Activation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
+using Microsoft.EntityFrameworkCore;
+using NASAapp.DAL;
 
 namespace NASAapp
 {
@@ -14,6 +16,11 @@ namespace NASAapp
         {
             this.InitializeComponent();
             this.Suspending += OnSuspending;
+
+            using (ApplicationContext db = new ApplicationContext())
+            {
+                db.Database.Migrate();
+            }
         }
 
         protected override void OnLaunched(LaunchActivatedEventArgs e)

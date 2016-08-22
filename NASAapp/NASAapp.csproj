@@ -89,6 +89,7 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
+    <None Include="App.config" />
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
@@ -96,6 +97,13 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Converters\DateToStringConverter.cs" />
+    <Compile Include="DAL\ApplicationContext.cs" />
+    <Compile Include="DAL\AstronomyPictureOfDayDAL.cs" />
+    <Compile Include="Migrations\20160822103158_MyFirstMigration.cs" />
+    <Compile Include="Migrations\20160822103158_MyFirstMigration.designer.cs">
+      <DependentUpon>20160822103158_MyFirstMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\ApplicationContextModelSnapshot.cs" />
     <Compile Include="Models\MenuItem.cs" />
     <Compile Include="Models\ObjectListItem.cs" />
     <Compile Include="Views\APODView.xaml.cs">
