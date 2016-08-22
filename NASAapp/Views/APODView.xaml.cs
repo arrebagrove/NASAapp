@@ -1,4 +1,5 @@
-﻿using NASASDK.Services;
+﻿using NASAapp.DAL;
+using NASASDK.Services;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -32,20 +33,45 @@ namespace NASAapp.Views
         private void APODView_Loaded(object sender, RoutedEventArgs e)
         {
             DateBlock.Date = DateTime.Now;
+            LoadingIndicator.Visibility = Visibility.Collapsed;
         }
 
         private async void Get_Clicked(object sender, RoutedEventArgs e)
         {
-            // see picture in database
-            // 
+            AstronomyPictureOfDayDAL picture = null;
+            LoadingIndicator.Visibility = Visibility.Visible;
+
             try
             {
-                var picture = await pictureService.GetTodayPicture();
+                using (ApplicationContext db = new ApplicationContext())
+                {
+                    picture = db.Pictures.FirstOrDefault(p =>
+                        p.Date.Year == DateTime.Now.Year && p.Date.Month == DateTime.Now.Month && p.Date.Day == DateTime.Now.Day);
+                    if (picture == null)
+                    {
+                        var remotePicture = await pictureService.GetTodayPicture();
 
-                Img.Source = new BitmapImage(new Uri(picture.Url));
-                TitleBlock.Text = picture.Title;
-                ExplanationBlock.Text = picture.Explanation;
-                CopyrightBlock.Text = picture.Copyright;
+                        // TODO Save picture and hdpicture to local storage and write their new urls to appropriate properties
+                        // 
+
+                        picture = new AstronomyPictureOfDayDAL
+                        {
+                            Copyright = remotePicture.Copyright,
+                            Date = remotePicture.Date,
+                            Explanation = remotePicture.Explanation,
+                            HdUrl = remotePicture.HdUrl,
+                            Title = remotePicture.Title,
+                            Url = remotePicture.Url,
+                        };
+                        db.Add(picture);
+                        await db.SaveChangesAsync();
+                    }
+
+                    Img.Source = new BitmapImage(new Uri(picture.Url));
+                    TitleBlock.Text = picture.Title;
+                    ExplanationBlock.Text = picture.Explanation;
+                    CopyrightBlock.Text = picture.Copyright;
+                }
             }
             finally
             {
