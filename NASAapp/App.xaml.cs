@@ -18,11 +18,11 @@ namespace NASAapp
 
         protected override void OnLaunched(LaunchActivatedEventArgs e)
         {
-            MainView mainView = Window.Current.Content as MainView;
+            ShellView mainView = Window.Current.Content as ShellView;
 
             if (mainView == null)
             {
-                mainView = new MainView();
+                mainView = new ShellView();
                 mainView.RootFrame.NavigationFailed += OnNavigationFailed;
 
                 if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
