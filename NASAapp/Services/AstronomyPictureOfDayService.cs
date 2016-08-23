@@ -20,7 +20,7 @@ namespace NASAapp.Services
         public async Task<AstronomyPictureOfDay> GetTodayPicture()
         {
             AstronomyPictureOfDay picture = null;
-            IPictureOfDayService pictureService = new PictureOfDayService();
+            IAstronomyPictureOfDayRemoteService pictureService = new AstronomyPictureOfDayRemoteService();
 
             using (ApplicationContext db = new ApplicationContext())
             {
@@ -92,5 +92,6 @@ namespace NASAapp.Services
     public interface IAstronomyPictureOfDayService
     {
         Task<AstronomyPictureOfDay> GetTodayPicture();
+        
     }
 }

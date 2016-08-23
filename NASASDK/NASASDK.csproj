@@ -112,7 +112,7 @@
     <Compile Include="Models\NEOFeed.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\NearEarthObjectsService.cs" />
-    <Compile Include="Services\PictureOfDayService.cs" />
+    <Compile Include="Services\AstronomyPictureOfDayRemoteService.cs" />
     <EmbeddedResource Include="Properties\NASASDK.rd.xml" />
   </ItemGroup>
   <ItemGroup />

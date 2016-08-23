@@ -12,7 +12,7 @@ namespace NASASDK.Services
     /// <summary>
     /// Service for getting astronomy picture of the day
     /// </summary>
-    public class PictureOfDayService : IPictureOfDayService
+    public class AstronomyPictureOfDayRemoteService : IAstronomyPictureOfDayRemoteService
     {
         /// <summary>
         /// Get picture of the day
@@ -69,9 +69,22 @@ namespace NASASDK.Services
         }
     }
 
-    public interface IPictureOfDayService
+    /// <summary>
+    /// Service for getting astronomy picture of the day from NASA server
+    /// </summary>
+    public interface IAstronomyPictureOfDayRemoteService
     {
+        /// <summary>
+        /// Get today's picture
+        /// </summary>
+        /// <returns>Picture object</returns>
         Task<PictureOfDay> GetTodayPicture();
+
+        /// <summary>
+        /// Get picture of the day
+        /// </summary>
+        /// <param name="date">The date of the APOD image to retrieve</param>
+        /// <returns>Picture object</returns>
         Task<PictureOfDay> GetPicture(DateTime date);
     }
 }
