@@ -13,10 +13,10 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="94*"/>
-            <RowDefinition Height="71*"/>
-            <RowDefinition Height="73*"/>
-            <RowDefinition Height="402*"/>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
         <Image x:Name="PackageLogo" 
