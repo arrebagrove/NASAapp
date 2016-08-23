@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.Storage;
+using Windows.Storage.Streams;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.Web.Http;
 
@@ -77,8 +78,12 @@ namespace NASAapp.Services
             }
 
             StorageFile imgFile = await imgFolder.CreateFileAsync(imgName, CreationCollisionOption.ReplaceExisting);
-            await FileIO.WriteBytesAsync(imgFile, new byte[] { });
-            /// TODO write byte array of image to this file
+            
+            using (HttpClient httpClient = new HttpClient())
+            {
+                IBuffer buffer = await httpClient.GetBufferAsync(new Uri(url));
+                await FileIO.WriteBufferAsync(imgFile, buffer);
+            }
 
             return localUrl;
         }
