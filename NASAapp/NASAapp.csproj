@@ -108,6 +108,9 @@
     <Compile Include="Models\MenuItem.cs" />
     <Compile Include="Models\ObjectListItem.cs" />
     <Compile Include="Services\AstronomyPictureOfDayService.cs" />
+    <Compile Include="Views\AboutView.xaml.cs">
+      <DependentUpon>AboutView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\APODView.xaml.cs">
       <DependentUpon>APODView.xaml</DependentUpon>
     </Compile>
@@ -186,6 +189,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Page>
+    <Page Include="Views\AboutView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\APODView.xaml">
       <SubType>Designer</SubType>

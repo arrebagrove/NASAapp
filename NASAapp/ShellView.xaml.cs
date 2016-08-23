@@ -15,6 +15,7 @@ namespace NASAapp
             {
                 new MenuItem { Glyph = (char)59667, Label = "Picture Of A Day", Destination = typeof(APODView) },
                 new MenuItem { Glyph = (char)59421, Label = "Near Earth Objects", Destination = typeof(NEOPage) },
+                new MenuItem { Glyph = (char)11111, Label = "About", Destination = typeof(AboutView) }
             };
         }
 
