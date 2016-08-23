@@ -5,7 +5,7 @@
   <Properties>
     <DisplayName>NASAapp</DisplayName>
     <PublisherDisplayName>nikit</PublisherDisplayName>
-    <Logo>Assets\NewStoreLogo.png</Logo>
+    <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
   <Dependencies>
     <TargetDeviceFamily Name="Windows.Universal" MinVersion="10.0.0.0" MaxVersionTested="10.0.0.0" />
