@@ -17,10 +17,59 @@ namespace NASAapp.Services
 {
     public class AstronomyPictureOfDayService : IAstronomyPictureOfDayService
     {
+        private IAstronomyPictureOfDayRemoteService remotePictureService;
+
+        public AstronomyPictureOfDayService()
+        {
+            // TODO inject here service
+            remotePictureService = new AstronomyPictureOfDayRemoteService();
+        }
+
+        public async Task<AstronomyPictureOfDay> GetPicture(DateTime date)
+        {
+            AstronomyPictureOfDay picture = null;
+
+            using (ApplicationContext db = new ApplicationContext())
+            {
+                var dbPicture = db.Pictures.FirstOrDefault(p => 
+                    p.Date.Year == date.Year && p.Date.Month == date.Month && p.Date.Day == date.Day);
+                if (dbPicture == null)
+                {
+                    IRemoteResult result = await remotePictureService.GetPicture(date);
+                    PictureOfDay remotePicture = result.Data as PictureOfDay;
+
+                    string localUrl = await SaveImageToLocalFolderAsync(remotePicture.Url, "Images");
+                    string localHdUrl = await SaveImageToLocalFolderAsync(remotePicture.HdUrl, "HdImages");
+
+                    dbPicture = new AstronomyPictureOfDayDAL
+                    {
+                        Copyright = remotePicture.Copyright,
+                        Date = remotePicture.Date,
+                        Explanation = remotePicture.Explanation,
+                        HdUrl = localHdUrl,
+                        Title = remotePicture.Title,
+                        Url = localUrl,
+                    };
+                    db.Add(dbPicture);
+                    await db.SaveChangesAsync();
+                }
+                picture = new AstronomyPictureOfDay
+                {
+                    Copyright = dbPicture.Copyright,
+                    Date = dbPicture.Date,
+                    Explanation = dbPicture.Explanation,
+                    HdUrl = dbPicture.HdUrl,
+                    Title = dbPicture.Title,
+                    Url = dbPicture.Url,
+                };
+
+                return picture;
+            }
+        }
+
         public async Task<AstronomyPictureOfDay> GetTodayPicture()
         {
             AstronomyPictureOfDay picture = null;
-            IAstronomyPictureOfDayRemoteService pictureService = new AstronomyPictureOfDayRemoteService();
 
             using (ApplicationContext db = new ApplicationContext())
             {
@@ -28,7 +77,8 @@ namespace NASAapp.Services
                     p.Date.Year == DateTime.Now.Year && p.Date.Month == DateTime.Now.Month && p.Date.Day == DateTime.Now.Day);
                 if (dbPicture == null)
                 {
-                    PictureOfDay remotePicture = await pictureService.GetTodayPicture();
+                    var result = await remotePictureService.GetTodayPicture();
+                    PictureOfDay remotePicture = result.Data as PictureOfDay;
 
                     string localUrl = await SaveImageToLocalFolderAsync(remotePicture.Url, "Images");
                     string localHdUrl = await SaveImageToLocalFolderAsync(remotePicture.HdUrl, "HdImages");
@@ -92,6 +142,7 @@ namespace NASAapp.Services
     public interface IAstronomyPictureOfDayService
     {
         Task<AstronomyPictureOfDay> GetTodayPicture();
-        
+
+        Task<AstronomyPictureOfDay> GetPicture(DateTime date);
     }
 }

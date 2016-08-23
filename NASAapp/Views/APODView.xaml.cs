@@ -36,9 +36,33 @@ namespace NASAapp.Views
         {
             DateBlock.Date = DateTime.Now;
             LoadingIndicator.Visibility = Visibility.Collapsed;
+
+            getPicture();
         }
 
         private async void Get_Clicked(object sender, RoutedEventArgs e)
+        {
+            DateTime chosenDate = DateBlock.Date.Date;
+
+            AstronomyPictureOfDay picture = null;
+            LoadingIndicator.Visibility = Visibility.Visible;
+
+            try
+            {
+                picture = await pictureService.GetPicture(chosenDate);
+
+                Img.Source = new BitmapImage(new Uri(picture.Url));
+                TitleBlock.Text = picture.Title;
+                ExplanationBlock.Text = picture.Explanation;
+                CopyrightBlock.Text = picture.Copyright != null ? picture.Copyright : "";
+            }
+            finally
+            {
+                LoadingIndicator.Visibility = Visibility.Collapsed;
+            }
+        }
+
+        private async void getPicture()
         {
             AstronomyPictureOfDay picture = null;
             LoadingIndicator.Visibility = Visibility.Visible;
