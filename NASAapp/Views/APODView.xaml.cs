@@ -1,4 +1,6 @@
 ﻿using NASAapp.DAL;
+using NASAapp.Models;
+using NASAapp.Services;
 using NASASDK.Services;
 using System;
 using System.Collections.Generic;
@@ -20,14 +22,14 @@ namespace NASAapp.Views
 {
     public sealed partial class APODView : Page
     {
-        IPictureOfDayService pictureService;
+        IAstronomyPictureOfDayService pictureService;
 
         public APODView()
         {
             InitializeComponent();
 
             Loaded += APODView_Loaded;
-            pictureService = new PictureOfDayService();
+            pictureService = new AstronomyPictureOfDayService();
         }
 
         private void APODView_Loaded(object sender, RoutedEventArgs e)
@@ -38,40 +40,17 @@ namespace NASAapp.Views
 
         private async void Get_Clicked(object sender, RoutedEventArgs e)
         {
-            AstronomyPictureOfDayDAL picture = null;
+            AstronomyPictureOfDay picture = null;
             LoadingIndicator.Visibility = Visibility.Visible;
 
             try
             {
-                using (ApplicationContext db = new ApplicationContext())
-                {
-                    picture = db.Pictures.FirstOrDefault(p =>
-                        p.Date.Year == DateTime.Now.Year && p.Date.Month == DateTime.Now.Month && p.Date.Day == DateTime.Now.Day);
-                    if (picture == null)
-                    {
-                        var remotePicture = await pictureService.GetTodayPicture();
+                picture = await pictureService.GetTodayPicture();
 
-                        // TODO Save picture and hdpicture to local storage and write their new urls to appropriate properties
-                        // 
-
-                        picture = new AstronomyPictureOfDayDAL
-                        {
-                            Copyright = remotePicture.Copyright,
-                            Date = remotePicture.Date,
-                            Explanation = remotePicture.Explanation,
-                            HdUrl = remotePicture.HdUrl,
-                            Title = remotePicture.Title,
-                            Url = remotePicture.Url,
-                        };
-                        db.Add(picture);
-                        await db.SaveChangesAsync();
-                    }
-
-                    Img.Source = new BitmapImage(new Uri(picture.Url));
-                    TitleBlock.Text = picture.Title;
-                    ExplanationBlock.Text = picture.Explanation;
-                    CopyrightBlock.Text = picture.Copyright;
-                }
+                Img.Source = new BitmapImage(new Uri(picture.Url));
+                TitleBlock.Text = picture.Title;
+                ExplanationBlock.Text = picture.Explanation;
+                CopyrightBlock.Text = picture.Copyright;
             }
             finally
             {

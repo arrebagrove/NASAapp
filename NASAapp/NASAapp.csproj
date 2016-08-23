@@ -104,8 +104,10 @@
       <DependentUpon>20160822103158_MyFirstMigration.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\ApplicationContextModelSnapshot.cs" />
+    <Compile Include="Models\AstronomyPictureOfDay.cs" />
     <Compile Include="Models\MenuItem.cs" />
     <Compile Include="Models\ObjectListItem.cs" />
+    <Compile Include="Services\AstronomyPictureOfDayService.cs" />
     <Compile Include="Views\APODView.xaml.cs">
       <DependentUpon>APODView.xaml</DependentUpon>
     </Compile>
@@ -192,6 +194,14 @@
     <Page Include="ShellView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\DeviceFamily-Desktop\APODView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\DeviceFamily-Mobile\APODView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\NEOPage.xaml">
       <SubType>Designer</SubType>
