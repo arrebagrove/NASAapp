@@ -30,7 +30,7 @@ namespace NASAapp.Views
             InitializeComponent();
 
             Loaded += APODView_Loaded;
-            pictureService = new AstronomyPictureOfDayService();
+            pictureService = AstronomyPictureOfDayService.Instance;
         }
 
         private void APODView_Loaded(object sender, RoutedEventArgs e)

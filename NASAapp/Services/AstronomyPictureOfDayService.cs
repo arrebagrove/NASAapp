@@ -19,10 +19,28 @@ namespace NASAapp.Services
     {
         private IAstronomyPictureOfDayRemoteService remotePictureService;
 
-        public AstronomyPictureOfDayService()
+        private static object lockObject = new object();
+        private static IAstronomyPictureOfDayService instance;
+
+        private AstronomyPictureOfDayService()
         {
             // TODO inject here service
             remotePictureService = new AstronomyPictureOfDayRemoteService();
+        }
+
+        public static IAstronomyPictureOfDayService Instance
+        {
+            get
+            {
+                lock (lockObject)
+                {
+                    if (instance == null)
+                    {
+                        instance = new AstronomyPictureOfDayService();
+                    }
+                    return instance;
+                }
+            }
         }
 
         public async Task<AstronomyPictureOfDay> GetPicture(DateTime date)
