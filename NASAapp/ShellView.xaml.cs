@@ -11,12 +11,20 @@ namespace NASAapp
         {
             InitializeComponent();
 
-            HamburgerMenuControl.ItemsSource = new List<MenuItem>
+            List<MenuItem> menuItems = new List<MenuItem>
             {
                 new MenuItem { Glyph = (char)59667, Label = "Picture Of A Day", Destination = typeof(APODView) },
                 new MenuItem { Glyph = (char)59421, Label = "Near Earth Objects", Destination = typeof(NEOPage) },
-                new MenuItem { Glyph = (char)11111, Label = "About", Destination = typeof(AboutView) }
             };
+
+            List<MenuItem> optionItems = new List<MenuItem>
+            {
+                new MenuItem { Glyph = (char)59155, Label = "Settings", Destination = typeof(SettingsPage) },
+                new MenuItem { Glyph = (char)59543, Label = "About", Destination = typeof(AboutView) },
+            };
+
+            HamburgerMenuControl.ItemsSource = menuItems;
+            HamburgerMenuControl.OptionsItemsSource = optionItems;
         }
 
         private void OnMenuItemClick(object sender, ItemClickEventArgs e)

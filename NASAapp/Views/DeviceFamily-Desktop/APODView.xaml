@@ -17,6 +17,12 @@
             <AppBarButton Icon="Download"
                           Label="Get"
                           Click="Get_Clicked" />
+            <CommandBar.Content>
+                <TextBlock Text="Astronomy Picture Of The Day"
+                           Style="{ThemeResource SubheaderTextBlockStyle}"
+                           Margin="8,0,0,0"
+                           VerticalAlignment="Center"/>
+            </CommandBar.Content>
         </CommandBar>
 
         <ProgressBar x:Name="LoadingIndicator"
@@ -35,24 +41,25 @@
                    VerticalAlignment="Top"
                    Source="/Assets/placeholder.png" />
 
-            <ScrollViewer Grid.Column="1">
+            <ScrollViewer Grid.Column="1" HorizontalContentAlignment="Left" VerticalScrollBarVisibility="Auto" Padding="20,24">
                 <StackPanel>
-                    <DatePicker x:Name="DateBlock" />
                     <TextBlock x:Name="TitleBlock"
-                           FontSize="24"
-                           FontWeight="Bold"
-                           Padding="10"
-                           Text="Title" />
-                    <TextBlock x:Name="ExplanationBlock"
-                           Style="{ThemeResource BodyTextBlockStyle}"
-                           TextWrapping="WrapWholeWords"
-                           TextAlignment="Justify"
-                           Padding="10"
-                           Text="Explanation" />
+                               Style="{ThemeResource TitleTextBlockStyle}"
+                               FontWeight="Bold"
+                               Margin="12,0,0,4"
+                               TextWrapping="WrapWholeWords"
+                               Text="Title" />
+                    <RichTextBlock x:Name="ExplanationRichBlock"
+                                   Style="{ThemeResource BodyRichTextBlockStyle}"
+                                   TextWrapping="WrapWholeWords"
+                                   TextAlignment="Justify"
+                                   IsTextSelectionEnabled="True"
+                                   TextIndent="12"/>
                     <TextBlock x:Name="CopyrightBlock"
-                           Style="{ThemeResource CaptionTextBlockStyle}"
-                           Text="copyright"
-                           HorizontalAlignment="Right"/>
+                               Style="{ThemeResource CaptionTextBlockStyle}"
+                               Text="copyright"
+                               HorizontalAlignment="Right"/>
+                    <DatePicker x:Name="DateBlock" />
                 </StackPanel>
             </ScrollViewer>
         </Grid>

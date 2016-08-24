@@ -13,6 +13,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Data;
+using Windows.UI.Xaml.Documents;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
@@ -53,7 +54,19 @@ namespace NASAapp.Views
 
                 Img.Source = new BitmapImage(new Uri(picture.Url));
                 TitleBlock.Text = picture.Title;
-                ExplanationBlock.Text = picture.Explanation;
+
+                ExplanationRichBlock.Blocks.Clear();
+                string[] paragraphs = picture.Explanation.Split(new string[] { "  " }, StringSplitOptions.RemoveEmptyEntries);
+                foreach (string p in paragraphs)
+                {
+                    Paragraph paragraph = new Paragraph();
+                    Run run = new Run();
+                    run.Text = p;
+                    paragraph.Inlines.Add(run);
+
+                    ExplanationRichBlock.Blocks.Add(paragraph);
+                }
+
                 CopyrightBlock.Text = picture.Copyright != null ? picture.Copyright : "";
             }
             finally
@@ -73,8 +86,20 @@ namespace NASAapp.Views
 
                 Img.Source = new BitmapImage(new Uri(picture.Url));
                 TitleBlock.Text = picture.Title;
-                ExplanationBlock.Text = picture.Explanation;
-                CopyrightBlock.Text = picture.Copyright;
+
+                ExplanationRichBlock.Blocks.Clear();
+                string[] paragraphs = picture.Explanation.Split(new string[] { "  " }, StringSplitOptions.RemoveEmptyEntries);
+                foreach (string p in paragraphs)
+                {
+                    Paragraph paragraph = new Paragraph();
+                    Run run = new Run();
+                    run.Text = p.Trim();
+                    paragraph.Inlines.Add(run);
+
+                    ExplanationRichBlock.Blocks.Add(paragraph);
+                }
+
+                CopyrightBlock.Text = picture.Copyright != null ? picture.Copyright : "";
             }
             finally
             {

@@ -17,12 +17,12 @@
                 </Grid.ColumnDefinitions>
                 <FontIcon Grid.Column="0"
                           Glyph="{x:Bind Path=Glyph, Mode=OneWay}"
-                          Foreground="White"/>
+                          Foreground="{ThemeResource ApplicationHeaderForegroundThemeBrush}"/>
                 <TextBlock Grid.Column="1"
                            Text="{x:Bind Path=Label, Mode=OneWay}"
                            FontSize="16"
                            VerticalAlignment="Center"
-                           Foreground="White"/>
+                           Foreground="{ThemeResource ApplicationHeaderForegroundThemeBrush}"/>
             </Grid>
         </DataTemplate>
     </Page.Resources>
@@ -67,14 +67,13 @@
         </VisualStateManager.VisualStateGroups>
 
         <controls:HamburgerMenu x:Name="HamburgerMenuControl"
-                                PaneBackground="Gray"
-                                Foreground="{ThemeResource SystemControlForegroundAccentBrush}"
+                                PaneBackground="LightGray"
                                 ItemTemplate="{StaticResource DefaultTemplate}"
                                 ItemClick="OnMenuItemClick"
                                 OptionsItemTemplate="{StaticResource DefaultTemplate}"
                                 OptionsItemClick="OnMenuItemClick">
             <Frame x:Name="RootFrame"
-                   x:FieldModifier="Public"/>
+                   x:FieldModifier="Public" />
         </controls:HamburgerMenu>
     </Grid>
 </Page>

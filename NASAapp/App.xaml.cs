@@ -25,35 +25,23 @@ namespace NASAapp
 
         protected override void OnLaunched(LaunchActivatedEventArgs e)
         {
-            ShellView mainView = Window.Current.Content as ShellView;
+            Frame rootFrame = Window.Current.Content as Frame;
 
-            if (mainView == null)
+            if (rootFrame == null)
             {
-                mainView = new ShellView();
-                mainView.RootFrame.NavigationFailed += OnNavigationFailed;
-
-                if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
-                {
-                    
-                }
-
-                Window.Current.Content = mainView;
+                rootFrame = new Frame();
+                Window.Current.Content = rootFrame;
             }
 
             if (e.PrelaunchActivated == false)
             {
-                if (mainView.RootFrame.Content == null)
+                if (rootFrame.Content == null)
                 {
-                    mainView.RootFrame.Navigate(typeof(APODView), e.Arguments);
+                    rootFrame.Navigate(typeof(ShellView), e.Arguments);
                 }
                 
                 Window.Current.Activate();
             }
-        }
-
-        void OnNavigationFailed(object sender, NavigationFailedEventArgs e)
-        {
-            throw new Exception("Failed to load Page " + e.SourcePageType.FullName);
         }
 
         private void OnSuspending(object sender, SuspendingEventArgs e)
