@@ -21,11 +21,11 @@ using Windows.UI.Xaml.Navigation;
 
 namespace NASAapp.Views
 {
-    public sealed partial class APODView : Page
+    public sealed partial class APODPage : Page
     {
         IAstronomyPictureOfDayService pictureService;
 
-        public APODView()
+        public APODPage()
         {
             InitializeComponent();
 

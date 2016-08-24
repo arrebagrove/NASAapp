@@ -22,9 +22,9 @@ namespace NASAapp.Views
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class AboutView : Page
+    public sealed partial class AboutPage : Page
     {
-        public AboutView()
+        public AboutPage()
         {
             this.InitializeComponent();
 

@@ -108,11 +108,11 @@
     <Compile Include="Models\MenuItem.cs" />
     <Compile Include="Models\ObjectListItem.cs" />
     <Compile Include="Services\AstronomyPictureOfDayService.cs" />
-    <Compile Include="Views\AboutView.xaml.cs">
-      <DependentUpon>AboutView.xaml</DependentUpon>
+    <Compile Include="Views\AboutPage.xaml.cs">
+      <DependentUpon>AboutPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\APODView.xaml.cs">
-      <DependentUpon>APODView.xaml</DependentUpon>
+    <Compile Include="Views\APODPage.xaml.cs">
+      <DependentUpon>APODPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="ShellView.xaml.cs">
       <DependentUpon>ShellView.xaml</DependentUpon>
@@ -181,11 +181,11 @@
       <Generator>MSBuild:Compile</Generator>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Page>
-    <Page Include="Views\AboutView.xaml">
+    <Page Include="Views\AboutPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\APODView.xaml">
+    <Page Include="Views\APODPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -193,11 +193,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\DeviceFamily-Desktop\APODView.xaml">
+    <Page Include="Views\DeviceFamily-Desktop\APODPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\DeviceFamily-Mobile\APODView.xaml">
+    <Page Include="Views\DeviceFamily-Mobile\APODPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
