@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace NASASDK.Services
 {
     /// <summary>
-    /// Service for getting astronomy picture of the day
+    /// Service for getting astronomy picture of the day from NASA server
     /// </summary>
     public class AstronomyPictureOfDayRemoteService : IAstronomyPictureOfDayRemoteService
     {
@@ -18,18 +18,26 @@ namespace NASASDK.Services
         /// Get picture of the day
         /// </summary>
         /// <param name="date">The date of the APOD image to retrieve</param>
-        /// <returns>Picture object</returns>
+        /// <returns>Server response</returns>
         public async Task<IRemoteResult> GetPicture(DateTime date)
         {
-            string dateValue = string.Format("{0:0000}-{1:00}-{2:00}", date.Year, date.Month, date.Day);
+            if (date.Date > DateTime.Now.Date)
+            {
+                throw new ArgumentException("Date should be not later than today");
+            }
+
+            #region Form query url
 
             StringBuilder queryBuilder = new StringBuilder();
             queryBuilder.Append(Constants.BASE_URL);
             queryBuilder.Append(Constants.APOD_URL);
-            queryBuilder.Append("?" + Constants.DATE + "=" + dateValue);
-            queryBuilder.Append("&" + Constants.API_KEY_PARAM + "=" + Constants.API_KEY);
+            queryBuilder.Append($"?{Constants.DATE}={date.Year:0000}-{date.Month:00}-{date.Day:00}");
+            queryBuilder.Append($"&{Constants.API_KEY_PARAM}={Constants.API_KEY}");
             string requestUrl = queryBuilder.ToString();
-            string stringResult;
+
+            #endregion
+
+            string jsonResponse;
 
             using (HttpClient client = new HttpClient())
             {
@@ -39,46 +47,17 @@ namespace NASASDK.Services
                     {
                         return new RemoteResult(false, errorMessage: responseMessage.ReasonPhrase);
                     }
-                    stringResult = await responseMessage.Content.ReadAsStringAsync();
+                    jsonResponse = await responseMessage.Content.ReadAsStringAsync();
                 }
             }
 
-            if (string.IsNullOrWhiteSpace(stringResult))
+            if (string.IsNullOrWhiteSpace(jsonResponse))
             {
-                return new RemoteResult(false, errorMessage: "Empty response");
+                return new RemoteResult(false, errorMessage: "Response is empty.");
             }
 
-            PictureOfDay pictureOfDay = JsonConvert.DeserializeObject<PictureOfDay>(stringResult);
-            return new RemoteResult(true, data: pictureOfDay);
-        }
+            PictureOfDay pictureOfDay = JsonConvert.DeserializeObject<PictureOfDay>(jsonResponse);
 
-        /// <summary>
-        /// Get today's picture
-        /// </summary>
-        /// <returns>Picture object</returns>
-        public async Task<IRemoteResult> GetTodayPicture()
-        {
-            string stringResult;
-            string requestUrl = $"{Constants.BASE_URL}{Constants.APOD_URL}?{Constants.API_KEY_PARAM}={Constants.API_KEY}";
-            
-            using (HttpClient client = new HttpClient())
-            {
-                using (HttpResponseMessage responseMessage = await client.GetAsync(requestUrl))
-                {
-                    if (!responseMessage.IsSuccessStatusCode)
-                    {
-                        return new RemoteResult(false, errorMessage: responseMessage.ReasonPhrase);
-                    }
-                    stringResult = await responseMessage.Content.ReadAsStringAsync();
-                }
-            }
-
-            if (string.IsNullOrWhiteSpace(stringResult))
-            {
-                return new RemoteResult(false, errorMessage: "Empty response");
-            }
-
-            PictureOfDay pictureOfDay = JsonConvert.DeserializeObject<PictureOfDay>(stringResult);
             return new RemoteResult(true, data: pictureOfDay);
         }
     }
@@ -89,16 +68,10 @@ namespace NASASDK.Services
     public interface IAstronomyPictureOfDayRemoteService
     {
         /// <summary>
-        /// Get today's picture
-        /// </summary>
-        /// <returns>Picture object</returns>
-        Task<IRemoteResult> GetTodayPicture();
-
-        /// <summary>
         /// Get picture of the day
         /// </summary>
         /// <param name="date">The date of the APOD image to retrieve</param>
-        /// <returns>Picture object</returns>
+        /// <returns>Server response</returns>
         Task<IRemoteResult> GetPicture(DateTime date);
     }
 }

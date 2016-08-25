@@ -85,48 +85,6 @@ namespace NASAapp.Services
             }
         }
 
-        public async Task<AstronomyPictureOfDay> GetTodayPicture()
-        {
-            AstronomyPictureOfDay picture = null;
-
-            using (ApplicationContext db = new ApplicationContext())
-            {
-                var dbPicture = db.Pictures.FirstOrDefault(p =>
-                    p.Date.Year == DateTime.Now.Year && p.Date.Month == DateTime.Now.Month && p.Date.Day == DateTime.Now.Day);
-                if (dbPicture == null)
-                {
-                    var result = await remotePictureService.GetTodayPicture();
-                    PictureOfDay remotePicture = result.Data as PictureOfDay;
-
-                    string localUrl = await SaveImageToLocalFolderAsync(remotePicture.Url, "Images");
-                    string localHdUrl = await SaveImageToLocalFolderAsync(remotePicture.HdUrl, "HdImages");
-
-                    dbPicture = new AstronomyPictureOfDayDAL
-                    {
-                        Copyright = remotePicture.Copyright,
-                        Date = remotePicture.Date,
-                        Explanation = remotePicture.Explanation,
-                        HdUrl = localHdUrl,
-                        Title = remotePicture.Title,
-                        Url = localUrl,
-                    };
-                    db.Add(dbPicture);
-                    await db.SaveChangesAsync();
-                }
-                picture = new AstronomyPictureOfDay
-                {
-                    Copyright = dbPicture.Copyright,
-                    Date = dbPicture.Date,
-                    Explanation = dbPicture.Explanation,
-                    HdUrl = dbPicture.HdUrl,
-                    Title = dbPicture.Title,
-                    Url = dbPicture.Url,
-                };
-
-                return picture;
-            }
-        }
-
         private async Task<string> SaveImageToLocalFolderAsync(string url, string folderName)
         {
             string[] parameters = url.Split(new char[] { '/' });
@@ -159,8 +117,6 @@ namespace NASAapp.Services
 
     public interface IAstronomyPictureOfDayService
     {
-        Task<AstronomyPictureOfDay> GetTodayPicture();
-
         Task<AstronomyPictureOfDay> GetPicture(DateTime date);
     }
 }

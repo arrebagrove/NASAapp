@@ -18,6 +18,8 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
+using System.Threading.Tasks;
+using System.Threading;
 
 namespace NASAapp.Views
 {
@@ -29,28 +31,31 @@ namespace NASAapp.Views
         {
             InitializeComponent();
 
+            DateBlock.Date = DateTime.Now;
+            LoadingIndicator.Visibility = Visibility.Collapsed;
             Loaded += APODView_Loaded;
             pictureService = AstronomyPictureOfDayService.Instance;
         }
 
-        private void APODView_Loaded(object sender, RoutedEventArgs e)
+        private async void APODView_Loaded(object sender, RoutedEventArgs e)
         {
-            DateBlock.Date = DateTime.Now;
-            LoadingIndicator.Visibility = Visibility.Collapsed;
-
-            getPicture();
+            await getPicture(DateTime.Now.Date);
         }
 
         private async void Get_Clicked(object sender, RoutedEventArgs e)
         {
             DateTime chosenDate = DateBlock.Date.Date;
+            await getPicture(chosenDate);
+        }
 
+        private async Task getPicture(DateTime date)
+        {
             AstronomyPictureOfDay picture = null;
             LoadingIndicator.Visibility = Visibility.Visible;
 
             try
             {
-                picture = await pictureService.GetPicture(chosenDate);
+                picture = await pictureService.GetPicture(date);
 
                 Img.Source = new BitmapImage(new Uri(picture.Url));
                 TitleBlock.Text = picture.Title;
@@ -62,38 +67,6 @@ namespace NASAapp.Views
                     Paragraph paragraph = new Paragraph();
                     Run run = new Run();
                     run.Text = p;
-                    paragraph.Inlines.Add(run);
-
-                    ExplanationRichBlock.Blocks.Add(paragraph);
-                }
-
-                CopyrightBlock.Text = picture.Copyright != null ? picture.Copyright : "";
-            }
-            finally
-            {
-                LoadingIndicator.Visibility = Visibility.Collapsed;
-            }
-        }
-
-        private async void getPicture()
-        {
-            AstronomyPictureOfDay picture = null;
-            LoadingIndicator.Visibility = Visibility.Visible;
-
-            try
-            {
-                picture = await pictureService.GetTodayPicture();
-
-                Img.Source = new BitmapImage(new Uri(picture.Url));
-                TitleBlock.Text = picture.Title;
-
-                ExplanationRichBlock.Blocks.Clear();
-                string[] paragraphs = picture.Explanation.Split(new string[] { "  " }, StringSplitOptions.RemoveEmptyEntries);
-                foreach (string p in paragraphs)
-                {
-                    Paragraph paragraph = new Paragraph();
-                    Run run = new Run();
-                    run.Text = p.Trim();
                     paragraph.Inlines.Add(run);
 
                     ExplanationRichBlock.Blocks.Add(paragraph);
