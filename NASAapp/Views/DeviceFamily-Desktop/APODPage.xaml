@@ -13,17 +13,10 @@
             <RowDefinition />
         </Grid.RowDefinitions>
 
-        <CommandBar Grid.Row="0">
-            <AppBarButton Icon="Download"
-                          Label="Get"
-                          Click="Get_Clicked" />
-            <CommandBar.Content>
-                <TextBlock Text="Astronomy Picture Of The Day"
-                           Style="{ThemeResource SubheaderTextBlockStyle}"
-                           Margin="8,0,0,0"
-                           VerticalAlignment="Center"/>
-            </CommandBar.Content>
-        </CommandBar>
+        <TextBlock Text="Astronomy Picture Of The Day"
+                   Style="{ThemeResource HeaderTextBlockStyle}"
+                   Margin="12,4,4,4"
+                   VerticalAlignment="Center"/>
 
         <ProgressBar x:Name="LoadingIndicator"
                      VerticalAlignment="Top"
@@ -59,7 +52,12 @@
                                Style="{ThemeResource CaptionTextBlockStyle}"
                                Text="copyright"
                                HorizontalAlignment="Right"/>
-                    <DatePicker x:Name="DateBlock" />
+                    <DatePicker x:Name="DateBlock"
+                                DateChanged="DateBlock_DateChanged"/>
+                    <Button x:Name="GetTodayButton"
+                            Content="Get Today"/>
+                    <Button x:Name="ShowDownloadedButton"
+                            Content="List of downloaded images"/>
                 </StackPanel>
             </ScrollViewer>
         </Grid>

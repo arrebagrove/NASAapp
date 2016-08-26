@@ -48,6 +48,16 @@ namespace NASAapp.Views
             await getPicture(chosenDate);
         }
 
+        private async void DateBlock_DateChanged(object sender, DatePickerValueChangedEventArgs e)
+        {
+            if (e.NewDate == e.OldDate)
+            {
+                return;
+            }
+            DateTime chosenDate = e.NewDate.Date.Date;
+            await getPicture(chosenDate);
+        }
+
         private async Task getPicture(DateTime date)
         {
             AstronomyPictureOfDay picture = null;
