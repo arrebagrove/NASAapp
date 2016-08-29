@@ -35,7 +35,7 @@
                                 <Image x:Name="AstronomyPicture" 
                                        Width="120" 
                                        Height="120"
-                                       Source="{x:Bind ImageUri, Mode=OneWay}"/>
+                                       Source="{x:Bind ImageUri, Mode=OneWay}" Stretch="UniformToFill"/>
                                 <TextBlock x:Name="Title" 
                                            Grid.Column="1" 
                                            VerticalAlignment="Center" 

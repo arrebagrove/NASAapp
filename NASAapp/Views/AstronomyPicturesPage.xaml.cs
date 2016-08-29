@@ -1,4 +1,6 @@
-﻿using NASAapp.Services;
+﻿using NASAapp.DAL;
+using NASAapp.Models;
+using NASAapp.Services;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -24,8 +26,30 @@ namespace NASAapp.Views
         public AstronomyPicturesPage()
         {
             InitializeComponent();
+            Loaded += AstronomyPicturesPage_Loaded;
 
             navigationService = NavigationService.Instance;
+        }
+
+        private void AstronomyPicturesPage_Loaded(object sender, RoutedEventArgs e)
+        {
+            List<AstronomyPictureListItem> model = new List<AstronomyPictureListItem>();
+
+            using (ApplicationContext db = new ApplicationContext())
+            {
+                List<AstronomyPictureOfDayDAL> pictures = db.Pictures.ToList();
+
+                foreach (var picture in pictures)
+                {
+                    model.Add(new AstronomyPictureListItem
+                    {
+                        ImageUri = picture.Url,
+                        Title = picture.Title,
+                    });
+                }
+            }
+
+            pictureList.ItemsSource = model;
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
