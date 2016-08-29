@@ -26,6 +26,7 @@ namespace NASAapp.Views
     public sealed partial class APODPage : Page
     {
         IAstronomyPictureOfDayService pictureService;
+        INavigationService navigationService;
 
         public APODPage()
         {
@@ -34,7 +35,9 @@ namespace NASAapp.Views
             DateBlock.Date = DateTime.Now;
             LoadingIndicator.Visibility = Visibility.Collapsed;
             Loaded += APODView_Loaded;
+
             pictureService = AstronomyPictureOfDayService.Instance;
+            navigationService = NavigationService.Instance;
         }
 
         private async void APODView_Loaded(object sender, RoutedEventArgs e)
@@ -88,6 +91,11 @@ namespace NASAapp.Views
             {
                 LoadingIndicator.Visibility = Visibility.Collapsed;
             }
+        }
+
+        private void ShowDownloadedButton_Click(object sender, RoutedEventArgs e)
+        {
+            navigationService.Navigate(typeof(AstronomyPicturesPage), null);
         }
     }
 }

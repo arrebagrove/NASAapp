@@ -57,7 +57,8 @@
                     <Button x:Name="GetTodayButton"
                             Content="Get Today"/>
                     <Button x:Name="ShowDownloadedButton"
-                            Content="List of downloaded images"/>
+                            Content="List of downloaded images"
+                            Click="ShowDownloadedButton_Click"/>
                 </StackPanel>
             </ScrollViewer>
         </Grid>

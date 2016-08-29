@@ -1,4 +1,5 @@
 ﻿using NASAapp.Models;
+using NASAapp.Services;
 using NASAapp.Views;
 using System.Collections.Generic;
 using Windows.UI.Xaml.Controls;
@@ -25,6 +26,9 @@ namespace NASAapp
 
             HamburgerMenuControl.ItemsSource = menuItems;
             HamburgerMenuControl.OptionsItemsSource = optionItems;
+
+            // register navigation frame
+            NavigationService.RegisterFrame(RootFrame);
         }
 
         private void OnMenuItemClick(object sender, ItemClickEventArgs e)
