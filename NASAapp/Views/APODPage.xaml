@@ -8,41 +8,79 @@
       mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <ProgressBar x:Name="LoadingIndicator"
-                     VerticalAlignment="Top"
-                     IsIndeterminate="True"
-                     Canvas.ZIndex="100" />
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="VisualStateGroup">
+                <VisualState x:Name="VisualStateWidth0">
+                    <VisualState.Setters>
+                        <Setter Target="Explanation.(RelativePanel.Below)"
+                                Value="Photo"/>
+                    </VisualState.Setters>
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0" />
+                    </VisualState.StateTriggers>
+                </VisualState>
+                <VisualState x:Name="VisualStateWidth600">
+                    <VisualState.Setters>
+                        <Setter Target="Explanation.(RelativePanel.RightOf)"
+                                Value="Photo" />
+                    </VisualState.Setters>
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="600" />
+                    </VisualState.StateTriggers>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
 
-        <ScrollViewer>
-            <StackPanel Grid.Column="0">
-                <Image x:Name="Img"
+        <TextBlock Text="{x:Bind ViewModel.Title, Mode=OneWay}"
+                   Style="{ThemeResource HeaderTextBlockStyle}"
+                   Margin="12,4,4,4" />
+
+        <ProgressBar VerticalAlignment="Top"
+                     IsIndeterminate="True"
+                     Canvas.ZIndex="100"
+                     Visibility="{x:Bind ViewModel.IsLoading, Mode=OneWay, Converter={StaticResource BoolToVisibleConv}}" />
+
+        <ScrollViewer Grid.Row="1"
+                      VerticalScrollBarVisibility="Auto"
+                      Margin="8"
+                      Padding="16,0">
+            <RelativePanel>
+                <Image x:Name="Photo"
                        Height="300"
-                       Source="/Assets/placeholder.png" />
-                <DatePicker x:Name="DateBlock" />
-                <TextBlock x:Name="TitleBlock"
-                           FontSize="24"
-                           FontWeight="Bold"
-                           Padding="10"
-                           Text="Title" />
-                <TextBlock x:Name="ExplanationBlock"
+                       Source="{x:Bind ViewModel.ImageSource, Mode=OneWay}" />
+
+                <TextBlock x:Name="Explanation"
                            Style="{ThemeResource BodyTextBlockStyle}"
                            TextWrapping="WrapWholeWords"
                            TextAlignment="Justify"
-                           Padding="10"
-                           Text="Explanation" />
-                <TextBlock x:Name="CopyrightBlock"
-                           Style="{ThemeResource CaptionTextBlockStyle}"
-                           Text="copyright"
-                           HorizontalAlignment="Right"/>
-            </StackPanel>
-        </ScrollViewer>
-    </Grid>
+                           IsTextSelectionEnabled="True"
+                           Text="{x:Bind ViewModel.Explanation, Mode=OneWay}" />
 
-    <Page.BottomAppBar>
-        <CommandBar>
-            <AppBarButton Icon="Download"
-                          Label="Get"
-                          Click="Get_Clicked" />
+                <TextBlock x:Name="Copyright"
+                           Style="{ThemeResource CaptionTextBlockStyle}"
+                           Text="{x:Bind ViewModel.Copyright, Mode=OneWay}"
+                           HorizontalAlignment="Right"
+                           RelativePanel.Below="Explanation" />
+
+                <DatePicker x:Name="DatePicker"
+                            Date="{x:Bind ViewModel.Date, Mode=TwoWay}"
+                            RelativePanel.Below="Copyright" />
+            </RelativePanel>
+        </ScrollViewer>
+
+        <CommandBar Grid.Row="2">
+            <AppBarButton x:Name="GetTodayButton"
+                          Label="Get Today"
+                          Icon="Target" />
+            <AppBarButton x:Name="ShowDownloadedButton"
+                          Label="Pictures"
+                          Icon="List"
+                          Click="ShowDownloadedButton_Click" />
         </CommandBar>
-    </Page.BottomAppBar>
+    </Grid>
 </Page>
