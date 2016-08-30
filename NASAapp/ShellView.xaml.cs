@@ -15,13 +15,12 @@ namespace NASAapp
             List<MenuItem> menuItems = new List<MenuItem>
             {
                 new MenuItem { Glyph = (char)59667, Label = "Picture Of A Day", Destination = typeof(APODPage) },
-                new MenuItem { Glyph = (char)59421, Label = "Near Earth Objects", Destination = typeof(NEOPage) },
+                new MenuItem { Glyph = (char)59959, Label = "List Of Pictures", Destination = typeof(AstronomyPicturesPage) },
             };
 
             List<MenuItem> optionItems = new List<MenuItem>
             {
                 new MenuItem { Glyph = (char)59155, Label = "Settings", Destination = typeof(SettingsPage) },
-                new MenuItem { Glyph = (char)59543, Label = "About", Destination = typeof(AboutPage) },
             };
 
             HamburgerMenuControl.ItemsSource = menuItems;
