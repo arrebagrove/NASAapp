@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NASAapp.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,41 +9,32 @@ namespace NASAapp.ViewModels
 {
     public class SettingsPageViewModel : ViewModelBase
     {
+        private ISettingsService settingsService;
+
         public SettingsPageViewModel()
         {
-
+            // TODO maybe in future inject dependency in constructor using some DI framework
+            settingsService = SettingsService.Instance;
         }
 
         #region Public Properties
 
-        private bool arePicturesSaved;
-
         public bool ArePicturesSaved
         {
-            get { return arePicturesSaved; }
+            get { return settingsService.SavePictures; }
             set
             {
-                if (arePicturesSaved == value)
-                {
-                    return;
-                }
-                arePicturesSaved = value;
+                settingsService.SavePictures = value;
                 OnPropertyChanged(nameof(ArePicturesSaved));
             }
         }
 
-        private bool arePicturesHd;
-
         public bool ArePicturesHd
         {
-            get { return arePicturesHd; }
+            get { return settingsService.SaveHdPictures; }
             set
             {
-                if (arePicturesHd == value)
-                {
-                    return;
-                }
-                arePicturesHd = value;
+                settingsService.SaveHdPictures = value;
                 OnPropertyChanged(nameof(ArePicturesHd));
             }
         }
