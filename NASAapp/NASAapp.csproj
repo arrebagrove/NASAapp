@@ -96,6 +96,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Constants\SettingsConstants.cs" />
     <Compile Include="Converters\BooleanToVisibilityConverter.cs" />
     <Compile Include="Converters\DateToStringConverter.cs" />
     <Compile Include="DAL\ApplicationContext.cs" />
@@ -111,6 +112,7 @@
     <Compile Include="Models\ObjectListItem.cs" />
     <Compile Include="Services\AstronomyPictureOfDayService.cs" />
     <Compile Include="Services\NavigationService.cs" />
+    <Compile Include="Services\SettingsService.cs" />
     <Compile Include="ViewModels\APODPageViewModel.cs" />
     <Compile Include="ViewModels\SettingsPageViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
