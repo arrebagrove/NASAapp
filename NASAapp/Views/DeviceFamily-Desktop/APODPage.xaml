@@ -18,8 +18,7 @@
                    Margin="12,4,4,4"
                    VerticalAlignment="Center"/>
 
-        <ProgressBar x:Name="LoadingIndicator"
-                     VerticalAlignment="Top"
+        <ProgressBar VerticalAlignment="Top"
                      IsIndeterminate="True"
                      Canvas.ZIndex="100" />
 
@@ -29,31 +28,28 @@
                 <ColumnDefinition Width="3*"/>
             </Grid.ColumnDefinitions>
 
-            <Image Grid.Column="0" 
-                   x:Name="Img"
-                   VerticalAlignment="Top"
-                   Source="/Assets/placeholder.png" />
+            <Image VerticalAlignment="Top"
+                   Source="{x:Bind ViewModel.ImageSource, Mode=OneWay}" />
 
-            <ScrollViewer Grid.Column="1" HorizontalContentAlignment="Left" VerticalScrollBarVisibility="Auto" Padding="20,24">
+            <ScrollViewer Grid.Column="1" 
+                          HorizontalContentAlignment="Left" 
+                          VerticalScrollBarVisibility="Auto" 
+                          Padding="20,24">
                 <StackPanel>
-                    <TextBlock x:Name="TitleBlock"
-                               Style="{ThemeResource TitleTextBlockStyle}"
+                    <TextBlock Style="{ThemeResource TitleTextBlockStyle}"
                                FontWeight="Bold"
                                Margin="12,0,0,4"
                                TextWrapping="WrapWholeWords"
-                               Text="Title" />
-                    <RichTextBlock x:Name="ExplanationRichBlock"
-                                   Style="{ThemeResource BodyRichTextBlockStyle}"
-                                   TextWrapping="WrapWholeWords"
-                                   TextAlignment="Justify"
-                                   IsTextSelectionEnabled="True"
-                                   TextIndent="12"/>
-                    <TextBlock x:Name="CopyrightBlock"
-                               Style="{ThemeResource CaptionTextBlockStyle}"
-                               Text="copyright"
+                               Text="{x:Bind ViewModel.Title, Mode=OneWay}" />
+                    <TextBlock Style="{ThemeResource BodyTextBlockStyle}"
+                               TextWrapping="WrapWholeWords"
+                               TextAlignment="Justify"
+                               IsTextSelectionEnabled="True"
+                               Text="{x:Bind ViewModel.Explanation, Mode=OneWay}"/>
+                    <TextBlock Style="{ThemeResource CaptionTextBlockStyle}"
+                               Text="{x:Bind ViewModel.Copyright, Mode=OneWay}"
                                HorizontalAlignment="Right"/>
-                    <DatePicker x:Name="DateBlock"
-                                DateChanged="DateBlock_DateChanged"/>
+                    <DatePicker Date="{x:Bind ViewModel.Date, Mode=OneWay}"/>
                     <Button x:Name="GetTodayButton"
                             Content="Get Today"/>
                     <Button x:Name="ShowDownloadedButton"
