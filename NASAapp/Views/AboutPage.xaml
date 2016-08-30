@@ -29,11 +29,12 @@
             </Style>
         </Grid.Resources>
         
-        <TextBlock Style="{ThemeResource TitleTextBlockStyle}"
-                   Margin="20,8,8,8"
-                   Text="About" />
+        <TextBlock Style="{ThemeResource HeaderTextBlockStyle}"
+                   Margin="12,0,0,0"
+                   Text="About this app" />
 
-        <StackPanel Grid.Row="1">
+        <StackPanel Grid.Row="1"
+                    Padding="16,0">
             <Image x:Name="PackageLogo"
                    Source="/Assets/placeholder.png"
                    Style="{StaticResource AboutImageItem}" />
@@ -53,6 +54,15 @@
             <CheckBox x:Name="PackageIsDevelopmentMode"
                       Content="Is In Development"
                       HorizontalAlignment="Center" IsEnabled="False"/>
+
+            <HyperlinkButton Content="Terms of Use"/>
+
+            <HyperlinkButton Content="Privacy Statement"/>
+
+            <HyperlinkButton Content="Give Feedback"
+                             Background="Gray"
+                             Foreground="White"
+                             Padding="8"/>
         </StackPanel>
     </Grid>
 </Page>
