@@ -27,48 +27,25 @@ namespace NASAapp.Views
     public sealed partial class APODPage : Page
     {
         APODPageViewModel ViewModel = new APODPageViewModel();
-        IAstronomyPictureOfDayService pictureService;
+       
         INavigationService navigationService;
 
         public APODPage()
         {
             InitializeComponent();
-
-            Loaded += APODView_Loaded;
-
-            pictureService = AstronomyPictureOfDayService.Instance;
             navigationService = NavigationService.Instance;
         }
 
-        private async void APODView_Loaded(object sender, RoutedEventArgs e)
+        protected async override void OnNavigatedTo(NavigationEventArgs e)
         {
-            await getPicture(DateTime.Now.Date);
+            base.OnNavigatedTo(e);
+
+            await ViewModel.GetPicture();
         }
 
         private async void Get_Clicked(object sender, RoutedEventArgs e)
         {
-            DateTime chosenDate = ViewModel.Date.Date;
-            await getPicture(chosenDate);
-        }
-
-        private async Task getPicture(DateTime date)
-        {
-            AstronomyPictureOfDay picture = null;
-            ViewModel.IsLoading = true;
-
-            try
-            {
-                picture = await pictureService.GetPicture(date);
-
-                ViewModel.ImageSource = new BitmapImage(new Uri(picture.Url));
-                ViewModel.Title = picture.Title;
-                ViewModel.Explanation = picture.Explanation;
-                ViewModel.Copyright = picture.Copyright != null ? picture.Copyright : "";
-            }
-            finally
-            {
-                ViewModel.IsLoading = false;
-            }
+            await ViewModel.GetPicture();
         }
 
         private void ShowDownloadedButton_Click(object sender, RoutedEventArgs e)

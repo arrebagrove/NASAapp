@@ -1,25 +1,27 @@
-﻿using System;
+﻿using NASAapp.Models;
+using NASAapp.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Media.Imaging;
 
 namespace NASAapp.ViewModels
 {
     public class APODPageViewModel : ViewModelBase
     {
-        private ImageSource imageSource;
-        private string title;
-        private string explanation;
-        private string copyright;
-        private DateTimeOffset date;
-        private bool isLoading;
+        IAstronomyPictureOfDayService pictureService;
 
         public APODPageViewModel()
         {
-            date = DateTimeOffset.Now;
+            pictureService = AstronomyPictureOfDayService.Instance;
         }
+
+        #region Public Properties
+
+        private ImageSource imageSource = new BitmapImage(new Uri("ms-appx:///Assets/placeholder.png"));
 
         public ImageSource ImageSource
         {
@@ -31,6 +33,8 @@ namespace NASAapp.ViewModels
             }
         }
 
+        private string title = "Title";
+
         public string Title
         {
             get { return title; }
@@ -40,6 +44,8 @@ namespace NASAapp.ViewModels
                 OnPropertyChanged(nameof(Title));
             }
         }
+
+        private string explanation = "Explanation";
 
         public string Explanation
         {
@@ -51,6 +57,8 @@ namespace NASAapp.ViewModels
             }
         }
 
+        private string copyright = "Copyright";
+
         public string Copyright
         {
             get { return copyright; }
@@ -61,15 +69,23 @@ namespace NASAapp.ViewModels
             }
         }
 
+        private DateTimeOffset date = DateTimeOffset.Now;
+
         public DateTimeOffset Date
         {
             get { return date; }
             set
             {
+                if (date == value)
+                {
+                    return;
+                }
                 date = value;
                 OnPropertyChanged(nameof(Date));
             }
         }
+
+        private bool isLoading = false;
 
         public bool IsLoading
         {
@@ -80,5 +96,49 @@ namespace NASAapp.ViewModels
                 OnPropertyChanged(nameof(IsLoading));
             }
         }
+
+        #endregion
+
+        #region Actions
+
+        public async Task GetPicture()
+        {
+            IsLoading = true;
+
+            try
+            {
+                AstronomyPictureOfDay picture = await pictureService.GetPicture(Date.Date);
+
+                ImageSource = new BitmapImage(new Uri(picture.Url));
+                Title = picture.Title;
+                Explanation = picture.Explanation;
+                Copyright = picture.Copyright != null ? picture.Copyright : "";
+            }
+            finally
+            {
+                IsLoading = false;
+            }
+        }
+
+        public async Task GetPicture(DateTime date)
+        {
+            IsLoading = true;
+
+            try
+            {
+                AstronomyPictureOfDay picture = await pictureService.GetPicture(date);
+
+                ImageSource = new BitmapImage(new Uri(picture.Url));
+                Title = picture.Title;
+                Explanation = picture.Explanation;
+                Copyright = picture.Copyright != null ? picture.Copyright : "";
+            }
+            finally
+            {
+                IsLoading = false;
+            }
+        }
+
+        #endregion
     }
 }

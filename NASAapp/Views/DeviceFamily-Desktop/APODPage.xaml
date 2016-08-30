@@ -50,7 +50,7 @@
                     <TextBlock Style="{ThemeResource CaptionTextBlockStyle}"
                                Text="{x:Bind ViewModel.Copyright, Mode=OneWay}"
                                HorizontalAlignment="Right"/>
-                    <DatePicker Date="{x:Bind ViewModel.Date, Mode=OneWay}"/>
+                    <DatePicker Date="{x:Bind ViewModel.Date, Mode=TwoWay}"/>
                     <Button x:Name="GetTodayButton"
                             Content="Get Today"/>
                     <Button x:Name="ShowDownloadedButton"
