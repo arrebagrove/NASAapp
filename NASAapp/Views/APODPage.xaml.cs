@@ -54,7 +54,7 @@ namespace NASAapp.Views
         private async Task getPicture(DateTime date)
         {
             AstronomyPictureOfDay picture = null;
-            //LoadingIndicator.Visibility = Visibility.Visible;
+            ViewModel.IsLoading = true;
 
             try
             {
@@ -67,7 +67,7 @@ namespace NASAapp.Views
             }
             finally
             {
-                //LoadingIndicator.Visibility = Visibility.Collapsed;
+                ViewModel.IsLoading = false;
             }
         }
 

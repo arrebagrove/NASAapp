@@ -14,6 +14,7 @@ namespace NASAapp.ViewModels
         private string explanation;
         private string copyright;
         private DateTimeOffset date;
+        private bool isLoading;
 
         public APODPageViewModel()
         {
@@ -67,6 +68,16 @@ namespace NASAapp.ViewModels
             {
                 date = value;
                 OnPropertyChanged(nameof(Date));
+            }
+        }
+
+        public bool IsLoading
+        {
+            get { return isLoading; }
+            set
+            {
+                isLoading = value;
+                OnPropertyChanged(nameof(IsLoading));
             }
         }
     }

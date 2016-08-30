@@ -20,7 +20,8 @@
 
         <ProgressBar VerticalAlignment="Top"
                      IsIndeterminate="True"
-                     Canvas.ZIndex="100" />
+                     Canvas.ZIndex="100"
+                     Visibility="{x:Bind ViewModel.IsLoading, Mode=OneWay, Converter={StaticResource BoolToVisibleConv}}"/>
 
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
