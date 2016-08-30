@@ -1,13 +1,56 @@
-﻿<Page
-    x:Class="NASAapp.Views.SettingsPage"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:NASAapp.Views"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d">
+﻿<Page x:Class="NASAapp.Views.SettingsPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:local="using:NASAapp.Views"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <TextBlock Text="Settings"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <TextBlock x:Name="Header"
+                   Text="Settings"
+                   Style="{ThemeResource HeaderTextBlockStyle}"
+                   Margin="12,0,0,0" />
+
+        <ScrollViewer Grid.Row="1"
+                      Padding="16,0"
+                      VerticalScrollBarVisibility="Auto">
+            <StackPanel>
+                <TextBlock Text="Pictures settings"
+                           Style="{ThemeResource SubheaderTextBlockStyle}"/>
+
+                <ToggleSwitch x:Name="SavePicturesSwitch" 
+                              Header="Save pictures on device"
+                              OnContent="On"
+                              OffContent="Off"
+                              IsOn="{x:Bind ViewModel.ArePicturesSaved, Mode=TwoWay}"/>
+
+                <ToggleSwitch Header="Download high resolution pictures"
+                              OnContent="On"
+                              OffContent="Off"
+                              IsOn="{x:Bind ViewModel.ArePicturesHd, Mode=TwoWay}" />
+
+                <TextBlock Text="Delete all downloaded pictures"/>
+
+                <Button Content="Delete"
+                        Margin="0,4"
+                        Background="Red"
+                        Foreground="White"
+                        HorizontalAlignment="Stretch" />
+
+                <HyperlinkButton Content="About"
+                                 MinWidth="100"
+                                 Background="LightGray"
+                                 Foreground="Black"
+                                 BorderBrush="Black"
+                                 BorderThickness="1"
+                                 Margin="0,24,0,0"/>
+            </StackPanel>
+        </ScrollViewer>
     </Grid>
 </Page>

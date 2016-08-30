@@ -26,7 +26,6 @@ namespace NASAapp
             HamburgerMenuControl.ItemsSource = menuItems;
             HamburgerMenuControl.OptionsItemsSource = optionItems;
 
-            // register navigation frame
             NavigationService.RegisterFrame(RootFrame);
         }
 
