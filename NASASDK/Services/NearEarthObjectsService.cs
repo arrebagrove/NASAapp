@@ -27,11 +27,11 @@ namespace NASASDK.Services
             string endDateValue = $"{endDate.Year:0000}-{endDate.Month:00}-{endDate.Day:00}";
 
             StringBuilder queryBuilder = new StringBuilder();
-            queryBuilder.Append(BASE_URL);
-            queryBuilder.Append(NEO_FEED_URL);
-            queryBuilder.Append($"?{START_DATE}={startDateValue}");
-            queryBuilder.Append($"&{END_DATE}={endDateValue}");
-            queryBuilder.Append($"&{API_KEY_PARAM}={API_KEY}");
+            queryBuilder.Append(BaseUrl);
+            queryBuilder.Append(NeoFeedUrl);
+            queryBuilder.Append($"?{StartDate}={startDateValue}");
+            queryBuilder.Append($"&{EndDate}={endDateValue}");
+            queryBuilder.Append($"&{ApiKeyParam}={ApiKey}");
             string requestUrl = queryBuilder.ToString();
 
             string result = "";

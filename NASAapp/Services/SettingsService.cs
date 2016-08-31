@@ -40,19 +40,19 @@ namespace NASAapp.Services
         {
             get
             {
-                object val = localSettings.Values[SettingsConstants.SAVE_PICTURES_SETTING];
+                object val = localSettings.Values[SettingsConstants.SavePicturesSetting];
                 if (val == null)
                 {
                     // this setting is not set yet, set it to default
-                    localSettings.Values[SettingsConstants.SAVE_PICTURES_SETTING] = SettingsConstants.SAVE_PICTURES_SETTING_DEFAULT;
-                    return SettingsConstants.SAVE_PICTURES_SETTING_DEFAULT;
+                    localSettings.Values[SettingsConstants.SavePicturesSetting] = SettingsConstants.SavePicturesSettingDefault;
+                    return SettingsConstants.SavePicturesSettingDefault;
                 }
                 return (bool)val;
             }
 
             set
             {
-                localSettings.Values[SettingsConstants.SAVE_PICTURES_SETTING] = value;
+                localSettings.Values[SettingsConstants.SavePicturesSetting] = value;
             }
         }
 
@@ -60,19 +60,19 @@ namespace NASAapp.Services
         {
             get
             {
-                object val = localSettings.Values[SettingsConstants.SAVE_HD_PICTURES_SETTING];
+                object val = localSettings.Values[SettingsConstants.SaveHdPicturesSetting];
                 if (val == null)
                 {
                     // this setting is not set yet, set it to default
-                    localSettings.Values[SettingsConstants.SAVE_HD_PICTURES_SETTING] = SettingsConstants.SAVE_HD_PICTURES_SETTING_DEFAULT;
-                    return SettingsConstants.SAVE_HD_PICTURES_SETTING_DEFAULT;
+                    localSettings.Values[SettingsConstants.SaveHdPicturesSetting] = SettingsConstants.SaveHdPicturesSettingDefault;
+                    return SettingsConstants.SaveHdPicturesSettingDefault;
                 }
                 return (bool)val;
             }
 
             set
             {
-                localSettings.Values[SettingsConstants.SAVE_HD_PICTURES_SETTING] = value;
+                localSettings.Values[SettingsConstants.SaveHdPicturesSetting] = value;
             }
         }
     }

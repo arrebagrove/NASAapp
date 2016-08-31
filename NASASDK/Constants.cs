@@ -8,21 +8,21 @@ namespace NASASDK
 {
     public class Constants
     {
-        public const string API_KEY_PARAM = "api_key";
-        public const string DATE = "date";
-        public const string START_DATE = "start_date";
-        public const string END_DATE = "end_date";
+        public const string ApiKeyParam = "api_key";
+        public const string Date = "date";
+        public const string StartDate = "start_date";
+        public const string EndDate = "end_date";
 
-        public const string API_KEY = "yeukV9ETZJhIL9Z9s5jHpznjm6beAJQBYjwy9H45";
+        public const string ApiKey = "yeukV9ETZJhIL9Z9s5jHpznjm6beAJQBYjwy9H45";
 
-        public const string BASE_URL = "https://api.nasa.gov";
+        public const string BaseUrl = "https://api.nasa.gov";
 
-        public const string APOD_URL = "/planetary/apod";
+        public const string ApodUrl = "/planetary/apod";
 
-        public const string NEO_FEED_URL = "/neo/rest/v1/feed";
-        public const string NEO_LOOKUP_URL = "/neo/rest/v1/neo/";
-        public const string NEO_BROWSE = "/neo/rest/v1/neo/browse/";
-        public const string NEO_STATS = "/neo/rest/v1/stats";
+        public const string NeoFeedUrl = "/neo/rest/v1/feed";
+        public const string NeoLookupUrl = "/neo/rest/v1/neo/";
+        public const string NeoBrowse = "/neo/rest/v1/neo/browse/";
+        public const string NeoStats = "/neo/rest/v1/stats";
 
     }
 }

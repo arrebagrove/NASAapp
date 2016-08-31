@@ -29,10 +29,10 @@ namespace NASASDK.Services
             #region Form query url
 
             StringBuilder queryBuilder = new StringBuilder();
-            queryBuilder.Append(Constants.BASE_URL);
-            queryBuilder.Append(Constants.APOD_URL);
-            queryBuilder.Append($"?{Constants.DATE}={date.Year:0000}-{date.Month:00}-{date.Day:00}");
-            queryBuilder.Append($"&{Constants.API_KEY_PARAM}={Constants.API_KEY}");
+            queryBuilder.Append(Constants.BaseUrl);
+            queryBuilder.Append(Constants.ApodUrl);
+            queryBuilder.Append($"?{Constants.Date}={date.Year:0000}-{date.Month:00}-{date.Day:00}");
+            queryBuilder.Append($"&{Constants.ApiKeyParam}={Constants.ApiKey}");
             string requestUrl = queryBuilder.ToString();
 
             #endregion
