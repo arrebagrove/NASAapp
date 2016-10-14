@@ -8,28 +8,6 @@
       mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <VisualStateManager.VisualStateGroups>
-            <VisualStateGroup x:Name="VisualStateGroup">
-                <VisualState x:Name="VisualStateWidth0">
-                    <VisualState.Setters>
-                        <Setter Target="Explanation.(RelativePanel.Below)"
-                                Value="Photo"/>
-                    </VisualState.Setters>
-                    <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="0" />
-                    </VisualState.StateTriggers>
-                </VisualState>
-                <VisualState x:Name="VisualStateWidth600">
-                    <VisualState.Setters>
-                        <Setter Target="Explanation.(RelativePanel.RightOf)"
-                                Value="Photo" />
-                    </VisualState.Setters>
-                    <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="600" />
-                    </VisualState.StateTriggers>
-                </VisualState>
-            </VisualStateGroup>
-        </VisualStateManager.VisualStateGroups>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition />
@@ -49,7 +27,7 @@
                       VerticalScrollBarVisibility="Auto"
                       Margin="8"
                       Padding="16,0">
-            <RelativePanel>
+            <StackPanel>
                 <Image x:Name="Photo"
                        Height="300"
                        Source="{x:Bind ViewModel.ImageSource, Mode=OneWay}" />
@@ -67,13 +45,18 @@
                            HorizontalAlignment="Right"
                            RelativePanel.Below="Explanation" />
 
-                <DatePicker x:Name="DatePicker"
-                            Date="{x:Bind ViewModel.Date, Mode=TwoWay}"
-                            RelativePanel.Below="Copyright" />
-            </RelativePanel>
+                
+            </StackPanel>
         </ScrollViewer>
 
-        <CommandBar Grid.Row="2">
+        <DatePicker x:Name="DatePicker"
+                    Grid.Row="2"
+                    Date="{x:Bind ViewModel.Date, Mode=TwoWay}"
+                    RelativePanel.Below="Copyright" />
+    </Grid>
+    
+    <Page.BottomAppBar>
+        <CommandBar>
             <AppBarButton x:Name="GetTodayButton"
                           Label="Get Today"
                           Icon="Target" />
@@ -82,5 +65,5 @@
                           Icon="List"
                           Click="ShowDownloadedButton_Click" />
         </CommandBar>
-    </Grid>
+    </Page.BottomAppBar>
 </Page>
